@@ -1,0 +1,168 @@
+<html lang="en">
+	<head>
+	  <!-- Required meta tags -->
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+	  <!-- Bootstrap CSS -->
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+	  <title>upload page</title>
+	 
+
+	</head>
+	<body>
+	  <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+		  <div class="container-fluid">
+			<a class="navbar-brand" href="https://www.tru.ca/"><b>TRU</b></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="mynavbar">
+			  <ul class="navbar-nav me-auto">
+				<li class="nav-item">
+				  <a class="nav-link" href="{% url 'home' %}">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{% url 'landingPage' %}"> Upload Files</a>
+				  </li>
+				
+				
+			  </ul>
+			  
+			 
+			</div>  
+		  </div>
+		  <span>
+		
+			<b style="color:white"> Hello, {{request.user}} </b> 
+  </span>
+
+  <span>
+	<button class="btn btn-light" type="button"><a href="{%url 'logout'%}" ><b>LOGOUT</b></a></button>
+</span>
+		</nav>
+  
+        
+        <h1>&nbsp;</h1>
+
+        
+	{% for msg in messages %}
+  
+	
+	<center>
+		  <div class="alert alert-warning alert-dismissible fade show d-inline-block" role="alert">
+			{{msg}}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+  
+	  </center>
+	   
+	  {% csrf_token %}
+	
+	
+	{% endfor %}
+  
+	  <h1 style="text-align: center;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><ins>Aggregate Files</ins></span></h1>
+	  <p>&nbsp;</p>
+
+      <span class="border">
+  
+        <div class="container-fluid mt-3">
+        <form  action="{%url 'adminPage'%}" method="POST" >
+            {% csrf_token %}
+   
+         <center>
+            <b>Select GA attribute - </b>
+      
+          <select id='course' name='GA_name' required>
+              <option value=''>Select GA attribute</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+              <option value='5'>5</option>
+              <option value='6'>6</option>
+              <option value='7'>7</option>
+              <option value='8'>8</option>
+              <option value='9'>9</option>
+              <option value='10'>10</option>
+              <option value='11'>11</option>
+              <option value='12'>12</option>
+              </select>
+              &nbsp;&nbsp;   
+              
+              <br>
+              <br>
+      
+            <b>Generate aggregate file sheet - </b>
+           
+            <button type="submit" class="btn btn-primary">Generate</button> <br>
+ </form>
+           <br>
+           <br>
+           <br>
+           <br>
+           <br>
+        
+
+          <u><h6> GA file: </h6></u>
+
+		  {% if ga == '1' %}
+		  <a href = 'media/GA_1_-_Template.xlsx'> click here to download aggregated file for GA1</a>
+
+		  {% elif ga == '2' %}
+		  <a href = 'media/GA_2_-_Template.xlsx'> click here to download aggregated file for GA2</a>
+
+		  {% elif ga == '3' %}
+		  <a href = 'media/GA_3_-_Template.xlsx'> click here to download aggregated file for GA3</a>
+		  
+		  {% elif ga == '4' %}
+		  <a href = 'media/GA_4_-_Template.xlsx'> click here to download aggregated file for GA4</a>
+
+		  {% elif ga == '5' %}
+		  <a href = 'media/GA_5_-_Template.xlsx'> click here to download aggregated file for GA5</a>
+
+		  {% elif ga == '6' %}
+		  <a href = 'media/GA_6_-_Template.xlsx'> click here to download aggregated file for GA6</a>
+
+		  {% elif ga == '7' %}
+		  <a href = 'media/GA_7_-_Template.xlsx'> click here to download aggregated file for GA7</a>
+
+		  {% elif ga == '8' %}
+		  <a href = 'media/GA_8_-_Template.xlsx'> click here to download aggregated file for GA8</a>
+
+		  {% elif ga == '9' %}
+		  <a href = 'media/GA_9_-_Template.xlsx'> click here to download aggregated file for GA9</a>
+
+		  {% elif ga == '10' %}
+		  <a href = 'media/GA_10_-_Template.xlsx'> click here to download aggregated file for GA10</a>
+
+		  {% elif ga == '11' %}
+		  <a href = 'media/GA_11_-_Template.xlsx'> click here to download aggregated file for GA11</a>
+
+		  {% elif ga == '12' %}
+		  <a href = 'media/GA_12_-_Template.xlsx'> click here to download aggregated file for GA12</a>
+		  {% endif %}
+    
+		 
+		  <br> <br>
+           <t style= "color:grey" >{{a}}{{ga}} {{hi}}</t>
+          
+          </center>
+		  
+      </span>
+		
+
+        
+  
+	  <!-- Optional JavaScript -->
+	  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
+  </html>

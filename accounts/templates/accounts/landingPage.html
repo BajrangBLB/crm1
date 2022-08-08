@@ -1,0 +1,440 @@
+
+<html lang="en">
+	<head>
+	  <!-- Required meta tags -->
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+	  <!-- Bootstrap CSS -->
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+	  <title>upload page</title>
+	 
+
+	</head>
+	<body>
+	  <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+		  <div class="container-fluid">
+			<a class="navbar-brand" href="https://www.tru.ca/"><b>TRU</b></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="mynavbar">
+			  <ul class="navbar-nav me-auto">
+				<li class="nav-item">
+				  <a class="nav-link" href="{% url 'home' %}">Home</a>
+				</li>
+
+				{% if user.is_superuser %}
+       <li class="nav-item">
+        <a class="nav-link" href="{% url "adminPage" %}">Generate Aggregate</a>
+      </li>
+      {%endif %}
+				 
+				
+			  </ul>
+			  
+			 
+			</div>  
+		  </div>
+		  <span>
+		
+			<b style="color:white"> Hello, {{request.user}} </b> 
+  </span>
+
+  <span>
+	<button class="btn btn-light" type="button"><a href="{%url 'logout'%}" ><b>LOGOUT</b></a></button>
+</span>
+		</nav>
+  
+		
+	  <h1>&nbsp;</h1>
+  
+	  <h1 style="text-align: center;"><span style="font-family:lucida sans unicode,lucida grande,sans-serif;"><ins>Upload File&nbsp;</ins></span></h1>
+	  <p>&nbsp;</p>
+	
+  
+  
+  
+  
+  
+	 
+  <p>&nbsp;</p>
+
+  
+  <ul>
+	
+	
+   
+	<li>
+   Upload only EXCEL Files (files having .xlsx extension )</li>
+	<li>User must upload following two files per course.&nbsp;&nbsp; File 1: Learning Outcomes mapping.&nbsp; and File 2: Student Marks</li>
+	
+	<p>&nbsp;</p>
+	</ul>
+
+	<hr>
+
+	{% for msg in messages %}
+  
+	
+	<center>
+		  <div class="alert alert-warning alert-dismissible fade show d-inline-block" role="alert">
+			{{msg}}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+  
+	  </center>
+	   
+	  {% csrf_token %}
+	
+	
+	{% endfor %}
+
+
+
+
+<span class="border">
+  
+  <div class="container-fluid mt-3">
+  <form  action="{% url 'uploads'%}" method="POST" enctype="multipart/form-data">
+	  {% csrf_token %}
+	  
+	  
+   <center>
+
+	<select id='course' name='course' onchange='course_nameChanged(this.value);'>
+		<option value=''>Select Course name</option>
+		<option value='BIOL'>BIOL</option>
+		<option value='CENG'>CENG</option>
+		
+		<option value='CMNS'>CMNS</option>
+		<option value='CHEM'>CHEM</option>
+		<option value='COMP'>COMP</option>
+		<option value='ENGL'>ENGL</option>
+		<option value='ENGR'>ENGR</option>
+		<option value='EENG'>EENG</option>
+		<option value='EPHY'>EPHY</option>
+		<option value='MATH'>MATH</option>
+		<option value='PHYS'>PHYS</option>
+		<option value='SENG'>SENG</option>
+		<option value='STAT'>STAT</option>
+		 
+		</select>
+		&nbsp;&nbsp;   
+		
+		<select id='course_code'name= 'course_code' onchange='code_Changed(this.value);'>
+		<option value=''>Select Course code</option>
+		</select>
+		&nbsp;&nbsp;
+
+		<script type="text/javascript">
+			var coursesBIOL=["3220", "3430", ];
+			var coursesCENG=["2010", "2030","3010", "3020", "3310", "4320"];
+			var coursesCMNS=["1290", "3510"];
+			var coursesCHEM=["1520"];
+			var coursesCOMP=["3410", "3610"];
+			var coursesENGL=["1100"];
+			var coursesEENG=["3010"];
+			var coursesENGR=["1100","1200", "2000","2200","2300","2400", "3300"];
+			var coursesEPHY=["1170","1700","1270", "2200","2300"];
+			var coursesMATH=["1130","1230", "1300","1700"];
+			var coursesPHYS=["2150","2250" ];
+			var coursesSENG=["1110","1210", "3110","3100","3120","3130","3210","4110","4100","4120" , "4130", "4140", "4220", "4230" , "4610" ,"4620" , "4630", "4640","4650", "4660"];
+			var coursesSTAT=["2230"]
+			
+			
+			function course_nameChanged(course)
+			{
+			var select_code = document.getElementById('course_code');
+			var ln = select_code.length - 1;
+			while (ln > 0)
+			{
+			select_code.remove(1); //Remove all but "Select "
+			ln--;
+			}
+			var course_codeArray;
+			
+			switch(course)
+			{
+			case "BIOL":
+			course_codeArray=coursesBIOL
+			break;
+			case "CENG":
+			course_codeArray=coursesCENG
+			break;
+			case "CMNS":
+			course_codeArray=coursesCMNS
+			break;
+			case "CHEM":
+			course_codeArray=coursesCHEM
+			break;
+			case "COMP":
+			course_codeArray=coursesCOMP
+			break;
+			
+			case "ENGL":
+			course_codeArray=coursesENGL
+			break;
+			case "EENG":
+			course_codeArray=coursesEENG
+			break;
+			case "ENGR":
+			course_codeArray=coursesENGR
+			break;
+			case "EPHY":
+			course_codeArray=coursesEPHY
+			break;
+			case "MATH":
+			course_codeArray=coursesMATH
+			break;
+			case "PHYS":
+			course_codeArray=coursesPHYS
+			break;
+			case "SENG":
+			course_codeArray=coursesSENG
+			break;
+			case "STAT":
+			course_codeArray=coursesSTAT
+			break;
+
+
+			default:
+			
+			}
+			for (i = 0; i < course_codeArray.length; i++){
+			var option = document.createElement('option');
+			option.text = course_codeArray[i];
+			option.value = course_codeArray[i];
+			select_code.add(option);
+			}}
+			</script>
+
+
+
+
+	
+	<label for="year">Choose a year:</label>
+	<select name="year" id="year">
+	  <option value="2017">2017</option>
+	  <option value="2018">2018</option>
+	  <option value="2019">2019</option>
+	  <option value="2020">2020</option>
+	  <option value="2021">2021</option>
+	  <option value="2022">2022</option>
+	  <option value="2023">2023</option>
+	  <option value="2024">2024</option>
+	  <option value="2025">2025</option>
+	  <option value="2026">2026</option>
+	  <option value="2027">2027</option>
+	  <option value="2028">2028</option>
+	  <option value="2026">2029</option>
+	  <option value="2027">2031</option>
+	  <option value="2028">2032</option>
+	</select>
+	
+	<label for="term">Choose a term:</label>
+	<select name="term" id="term">
+	  <option value="Winter">Winter</option> 
+	  <option value="Fall">Fall</option>
+	 
+	</select>
+	<br>
+	<br>
+
+
+	  <b>Upload Learning Outcomes mapping here- </b>
+	 
+	  <input type= "file" multiple name = "fileupload" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="fileSelect" runat="server">
+	 
+	  <button type="submit" class="btn btn-primary">Submit</button> <br>
+
+	 <br>
+	 <div>
+		<br>
+		<br>
+
+		<h6> My uploads: </h6>
+		  
+		  {% for file in files%}
+		  {% csrf_token %}
+		
+		  
+	
+		  <form method='post' action="{%url 'uploads'%}" >
+			  {% csrf_token %}
+			   <a href = 'media/{{file.myfiles.name}}'>{{file.myfiles.name}}</a>	
+		  </form >
+	  
+		  {% endfor %}
+
+		  
+	  
+	  </div>
+
+	 
+
+
+   </center>
+  
+ 
+  </form>
+  
+</span>
+
+<p>&nbsp;</p>
+  
+<p>&nbsp;</p>
+  
+
+
+  
+  <form  action="{% url 'uploads2'%}" method="POST" enctype="multipart/form-data">
+  
+	  {% csrf_token %}
+  
+	  <center>
+
+		<label for="course">Choose a course:</label>
+	<select name="course" id="course">
+	  <option value="BIOL-3220">BIOL 3220</option>
+	  <option value="BIOL-3430">BIOL 3430</option>
+	  <option value="CENG-2010">CENG 2010</option>
+	  <option value="CENG-2030">CENG 2030</option>
+	  <option value="CENG-3010">CENG 3010</option>
+	  <option value="CENG-3020">CENG 3020</option>
+	  <option value="CENG-3310">CENG 3310</option>
+	  <option value="CENG-4320">CENG 4320</option>
+	  <option value="CMNS-1290">CMNS 1290</option>
+	  <option value="CMNS-3510">CMNS 3510</option>
+	  <option value="CHEM-1520">CHEM 1520</option>
+	  <option value="COMP-3410">COMP 3410</option>
+	  <option value="COMP-3610">COMP 3610</option>
+	  <option value="EENG-3010">EENG 3010</option>
+	  <option value="ENGL-1100">ENGL 1100</option>
+	  <option value="ENGR-1100">ENGR 1100</option>
+	  <option value="ENGR-1200">ENGR 1200</option>
+	  <option value="ENGR-2000">ENGR 2000</option>
+	  <option value="ENGR-2200">ENGR 2200</option>
+	  <option value="ENGR-2300">ENGR 2300</option>
+	  <option value="ENGR-2400">ENGR 2400</option>
+	  <option value="ENGR-3300">ENGR 3300</option>
+	  <option value="EPHY-1170">EPHY 1170</option>
+	  <option value="EPHY-1700">EPHY 1700</option>
+	  <option value="EPHY-1270">EPHY 1270</option>
+	  <option value="EPHY-2200">EPHY 2200</option>
+	  <option value="EPHY-2300">EPHY 2300</option>
+	  <option value="MATH-1300">MATH 1300</option>
+	  <option value="MATH-1130">MATH 1130</option>
+	  <option value="MATH-1230">MATH 1230</option>
+	  <option value="MATH-1700">MATH 1700</option>
+	  <option value="STAT-2230">STAT 2230</option>
+	  <option value="PHYS-2150">PHYS 2150</option>
+	  <option value="PHYS-2250">PHYS 2250</option>
+
+	  <option value="SENG-1110">SENG 1110</option>
+	  <option value="SENG-1210">SENG 1210</option>
+      
+	  <option value="SENG-3110">SENG 3110</option>
+	  <option value="SENG-3100">SENG 3100</option>
+	  <option value="SENG-3120">SENG 3120</option>
+	  <option value="SENG-3130">SENG 3130</option>
+	  <option value="SENG-3210">SENG 3210</option>
+	  
+	  <option value="SENG-4110">SENG 4110</option>
+	  <option value="SENG-4100">SENG 4100</option>
+	  <option value="SENG-4120">SENG 4120</option>
+	  <option value="SENG-4130">SENG 4130</option>
+	  <option value="SENG-4140">SENG 4140</option>
+	  <option value="SENG-4220">SENG 4220</option>
+	  <option value="SENG-4230">SENG 4230</option>
+	  <option value="SENG-4610">SENG 4610</option>
+	  <option value="SENG-4620">SENG 4620</option>
+	  <option value="SENG-4630">SENG 4630</option>
+	  <option value="SENG-4640">SENG 4640</option>
+	  <option value="SENG-4650">SENG 4650</option>
+	  <option value="SENG-4660">SENG 4660</option>
+
+
+	</select>
+	
+	<label for="year">Choose a year:</label>
+	<select name="year" id="year">
+	  <option value="2017">2017</option>
+	  <option value="2018">2018</option>
+	  <option value="2019">2019</option>
+	  <option value="2020">2020</option>
+	  <option value="2021">2021</option>
+	  <option value="2022">2022</option>
+	  <option value="2023">2023</option>
+	  <option value="2024">2024</option>
+	  <option value="2025">2025</option>
+	  <option value="2026">2026</option>
+	  <option value="2027">2027</option>
+	  <option value="2028">2028</option>
+	  <option value="2026">2029</option>
+	  <option value="2027">2031</option>
+	  <option value="2028">2032</option>
+	</select>
+	
+	<label for="term">Choose a term:</label>
+	<select name="term" id="term">
+	  <option value="Winter">Winter</option>
+ 
+	  <option value="Fall">Fall</option>
+	 
+	</select>
+	<br>
+	<br>
+
+		
+		  <b>Upload Student Marks here-     </b>
+		 
+  
+  
+	  <input type= "file" multiple name = "fileupload2"accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="fileSelect" runat="server">
+	 
+	  <button type="submit" class="btn btn-primary">Submit</button> <br>
+
+	  
+  <div>
+	<br>
+	<br>
+	<h6> My uploads : </h6>
+	  
+	  {% for file in files1%}
+	  {% csrf_token %}
+	  
+	  {{file.myfiles.upload.url}} 
+	  {{file.upload}}
+
+	  <form method='post' action="{%url 'uploads'%}" >
+		  {% csrf_token %}
+		   <a href = 'media/{{file.myfiles.name}}'>{{file.myfiles.name}}</a>	
+	  </form >
+  
+	  {% endfor %}
+  
+  </div>
+	
+  </center>
+  
+  </form>
+
+  <p>&nbsp;</p>
+
+  
+
+
+  </div>
+  
+  
+	  <!-- Optional JavaScript -->
+	  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
+  </html>
